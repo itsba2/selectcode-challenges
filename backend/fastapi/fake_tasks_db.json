@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Do something nice for someone I care about",
+    "description": "This is a description for the task",
+    "done": true
+  },
+  {
+    "id": 2,
+    "title": "Memorize the fifty states and their capitals",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 3,
+    "title": "Watch a classic movie",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 4,
+    "title": "Contribute code or a monetary donation to an open-source software project",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 5,
+    "title": "Solve a Rubik's cube",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 6,
+    "title": "Bake pastries for me and neighbor",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 7,
+    "title": "Go see a Broadway production",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 8,
+    "title": "Write a thank you letter to an influential person in my life",
+    "description": "This is a description for the task",
+    "done": true
+  },
+  {
+    "id": 9,
+    "title": "Invite some friends over for a game night",
+    "description": "This is a description for the task",
+    "done": false
+  },
+  {
+    "id": 10,
+    "title": "Have a football scrimmage with some friends",
+    "description": "This is a description for the task",
+    "done": false
+  }
+]
