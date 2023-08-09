@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -102,3 +103,14 @@ async def get_task_by_id(task_id: int):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
+
+
+@ app.post("/tasks")
+async def create_task(new_task: Task):
+    """
+    Create a new task.
+    """
+    new_task_json = jsonable_encoder(new_task)
+    fake_tasks_db.append(new_task_json)
+    print("TASKS DB\n", fake_tasks_db)
+    return new_task_json
