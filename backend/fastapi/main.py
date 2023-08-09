@@ -114,3 +114,17 @@ async def create_task(new_task: Task):
     fake_tasks_db.append(new_task_json)
     print("TASKS DB\n", fake_tasks_db)
     return new_task_json
+
+
+@ app.put("/tasks/{task_id}")
+async def update_task(task_id: int, updated_task: Task):
+    """
+    Update the details of an existing task.
+    """
+    updated_task_json = jsonable_encoder(updated_task)
+    for task in fake_tasks_db:
+        if task['id'] == task_id:
+            task.update(updated_task_json)
+            print("TASKS DB\n", fake_tasks_db)
+            return task
+    raise HTTPException(status_code=404, detail="Task not found")
