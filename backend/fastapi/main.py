@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
 app = FastAPI()
@@ -76,9 +76,29 @@ fake_tasks_db = [
     }]
 
 
+def search_in_db(key: str, value):
+    """
+    Search DB for a specific key-value pair.
+    """
+    for task in fake_tasks_db:
+        if task[key] == value:
+            return task
+
+
 @ app.get("/tasks")
 async def get_tasks():
     """
     Retrieve a list of all tasks.
     """
     return fake_tasks_db
+
+
+@ app.get("/tasks/{task_id}")
+async def get_task_by_id(task_id: int):
+    """
+    Retrieve the details of a specific task.
+    """
+    task = search_in_db("id", task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return task
