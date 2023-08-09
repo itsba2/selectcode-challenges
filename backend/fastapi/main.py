@@ -101,7 +101,8 @@ async def get_task_by_id(task_id: int):
     """
     task = search_in_db("id", task_id)
     if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
+        raise HTTPException(
+            status_code=404, detail="The task you are looking for does not exist.")
     return task
 
 
@@ -121,10 +122,28 @@ async def update_task(task_id: int, updated_task: Task):
     """
     Update the details of an existing task.
     """
+    task = search_in_db("id", task_id)
+    if task not in fake_tasks_db:
+        raise HTTPException(
+            status_code=404, detail="The task you are looking for does not exist.")
+
     updated_task_json = jsonable_encoder(updated_task)
+
     for task in fake_tasks_db:
-        if task['id'] == task_id:
+        if task["id"] == task_id:
             task.update(updated_task_json)
-            print("TASKS DB\n", fake_tasks_db)
             return task
-    raise HTTPException(status_code=404, detail="Task not found")
+
+
+@ app.delete("/tasks/{task_id}")
+async def delete_task(task_id: int):
+    """
+    Delete a task.
+    """
+    task = search_in_db("id", task_id)
+    if not task:
+        raise HTTPException(
+            status_code=404, detail="The task you are looking for does not exist.")
+    fake_tasks_db.remove(task)
+    print(fake_tasks_db)
+    return task_id
