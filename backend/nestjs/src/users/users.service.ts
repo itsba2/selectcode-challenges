@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserPublisherService } from './user-publisher.service';
@@ -19,8 +19,10 @@ export class UsersService {
     return payload.username;
   }
 
-  // Retrieve the project given its ID.
+  // Retrieve the user given its username.
   async getUserByUsername(username: string): Promise<User> {
-    return await this.usersRepository.findOne({ where: { username } });
+    const user = await this.usersRepository.findOne({ where: { username } });
+    if (!user) throw new NotFoundException('User not found');
+    return user;
   }
 }
