@@ -14,10 +14,9 @@ export class UsersService {
   ) {}
 
   // Add a new user.
-  addUser(payload: UserDto): UserDto {
-    console.log('user service', payload);
+  addUser(payload: UserDto): string {
     this.userPublisherService.publishUserAddedEvent(payload);
-    return payload;
+    return payload.username;
   }
 
   // Retrieve the project given its ID.

@@ -7,11 +7,11 @@ import { UserDto } from './dtos/user.dto';
 export class UserPublisherService {
   constructor(private eventEmitter: EventEmitter2) {}
 
-  publishUserAddedEvent(payload: UserDto): UserDto {
+  publishUserAddedEvent(payload: UserDto): string {
     const userAddedEvent = new UserAddedEvent();
     userAddedEvent.username = payload.username;
     userAddedEvent.password = payload.password;
     this.eventEmitter.emit('user.added', userAddedEvent);
-    return payload;
+    return payload.username;
   }
 }
