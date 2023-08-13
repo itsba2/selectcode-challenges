@@ -28,3 +28,7 @@
 .selected-square {
   background-color: lightyellow;
 }
+
+.valid-move-square {
+  background-color: lightskyblue;
+}

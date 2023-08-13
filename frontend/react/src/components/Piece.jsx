@@ -1,7 +1,7 @@
-import blackKnight from "../../assets/pieces/black/knight.svg";
-import blackQueen from "../../assets/pieces/black/queen.svg";
-import whiteKnight from "../../assets/pieces/white/knight.svg";
-import whiteQueen from "../../assets/pieces/white/queen.svg";
+import blackKnight from "../assets/pieces/black/knight.svg";
+import blackQueen from "../assets/pieces/black/queen.svg";
+import whiteKnight from "../assets/pieces/white/knight.svg";
+import whiteQueen from "../assets/pieces/white/queen.svg";
 
 const Piece = ({ type, color }) => {
   if (!type || !color) return null

@@ -3,7 +3,7 @@ import Piece from "./Piece";
 
 const Square = ({ piece, color, onClick}) => {
   return (
-    <div className={`square ${color}-square`} onClick={onClick}>
+    <div className={`square ${color}`} onClick={onClick}>
       {piece && <Piece type={piece.type} color={piece.color} />}
     </div>
   );
