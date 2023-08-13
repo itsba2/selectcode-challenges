@@ -1,26 +1,30 @@
 .board {
-    --board-width: 480px;
-    --board-height: 480px;
-    width: var(--board-width);
-    height: var(--board-height);
-    background-color: red;
-    display: grid;
-    grid-template-columns: repeat(8, calc(var(--board-width) / 8));
-    grid-template-rows: repeat(8, calc(var(--board-height) / 8));
-  }
-  
-  .square {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .dark-square {
-    background-color: darkseagreen;
-  }
-  
-  .light-square {
-    background-color: lightseagreen;
-  }
+  --board-width: 480px;
+  --board-height: 480px;
+  width: var(--board-width);
+  height: var(--board-height);
+  background-color: red;
+  display: grid;
+  grid-template-columns: repeat(8, calc(var(--board-width) / 8));
+  grid-template-rows: repeat(8, calc(var(--board-height) / 8));
+}
+
+.square {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dark-square {
+  background-color: darkseagreen;
+}
+
+.light-square {
+  background-color: lightseagreen;
+}
+
+.selected-square {
+  background-color: lightyellow;
+}
