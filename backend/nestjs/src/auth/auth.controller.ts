@@ -17,8 +17,8 @@ export class AuthController {
 
   // POST /auth/register : Register user
   @Post('register')
-  registerUser(@Body() payload: UserDto) {
-    return this.authService.registerUser(payload);
+  registerUser(@Body() body: UserDto) {
+    return this.authService.registerUser(body);
   }
 
   // POST /auth : Login user
