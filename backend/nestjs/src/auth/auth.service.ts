@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { UserDto } from 'src/users/dtos/user.dto';
-import { User } from 'src/users/entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -12,10 +12,14 @@ export class AuthService {
     return payload;
   }
 
-  async loginUser(payload: UserDto): Promise<any> {
+  async validateUser(payload: UserDto) {
     const user = await this.usersService.getUserByUsername(payload.username);
-    if (user?.password !== payload.password) throw new UnauthorizedException();
-    const { password, ...result } = user;
-    return result;
+    const match = await bcrypt.compare(payload.password, user.password);
+    if (!user || !match) throw new UnauthorizedException();
+    if (user && match) {
+      const { password, ...rest } = user;
+      return rest;
+    }
+    return null;
   }
 }
