@@ -12,6 +12,7 @@ export class ProjectPublisherService {
 
   publishProjectAddedEvent(payload: AddProjectDto): AddProjectDto {
     const projectAddedEvent = new ProjectAddedEvent();
+    projectAddedEvent.userId = payload.userId;
     projectAddedEvent.title = payload.title;
     projectAddedEvent.description = payload.description;
     this.eventEmitter.emit('project.added', projectAddedEvent);

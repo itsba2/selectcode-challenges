@@ -1,5 +1,4 @@
 export class UpdateProjectDto {
-    title: string;
-    description: string;
-  }
-  
+  title: string;
+  description: string;
+}

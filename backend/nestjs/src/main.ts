@@ -10,6 +10,9 @@ async function bootstrap() {
       secret: 'KEEP ME IN A .ENV FILE',
       resave: false,
       saveUninitialized: false,
+      cookie: {
+        maxAge: 10 * 60 * 1000, // 10 minutes
+      },
     }),
   );
 

@@ -1,5 +1,5 @@
 export class AddProjectDto {
-    title: string;
-    description: string;
-  }
-  
+  userId: string;
+  title: string;
+  description: string;
+}

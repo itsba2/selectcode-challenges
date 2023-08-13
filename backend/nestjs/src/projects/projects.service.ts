@@ -15,8 +15,8 @@ export class ProjectsService {
   ) {}
 
   // Retrieve a list of all projects for a user.
-  async getProjects(): Promise<Project[]> {
-    return await this.projectsRepository.find();
+  async getProjects(userId: string): Promise<Project[]> {
+    return await this.projectsRepository.find({ where: { userId } });
   }
 
   // Add a new project.
