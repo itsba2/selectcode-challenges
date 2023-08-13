@@ -10,5 +10,6 @@ import { ProjectListenerService } from './project-listener.service';
   imports: [TypeOrmModule.forFeature([Project])],
   controllers: [ProjectsController],
   providers: [ProjectsService, ProjectPublisherService, ProjectListenerService],
+  exports: [ProjectsService],
 })
 export class ProjectsModule {}

@@ -48,7 +48,7 @@ export class ProjectsController {
     // get existing project
     const project = await this.projectsService.getProjectById(projectId);
     // if project does not exist throw exception
-    if (!project) throw new NotFoundException('Project not found');
+    if (!project) throw new NotFoundException('Project not found.');
     // if user does not own this project, don't allow update
     if (req.user.id !== parseInt(project.userId))
       throw new UnauthorizedException();

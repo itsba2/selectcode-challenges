@@ -24,11 +24,8 @@ export class TaskListenerService {
   }
 
   @OnEvent('task.updated')
-  async handleTaskUpdatedEvent(
-    projectId: string,
-    event: TaskUpdatedEvent,
-  ): Promise<void> {
-    await this.tasksRepository.update(projectId, event);
+  async handleTaskUpdatedEvent(event: TaskUpdatedEvent): Promise<void> {
+    await this.tasksRepository.update(event.id, event);
   }
 
   @OnEvent('task.removed')
