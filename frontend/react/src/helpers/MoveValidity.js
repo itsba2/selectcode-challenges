@@ -1,4 +1,8 @@
 class MoveValidity {
+  /**
+   * Calculate move validity
+   * @param {array} board Board state
+   */
   constructor(board) {
     this.board = board;
   }
@@ -32,6 +36,7 @@ class MoveValidity {
     return validMoves;
   }
 
+  // calculate valid queen moves
   validQueenMoves(row, col) {
     const validMoves = [];
 

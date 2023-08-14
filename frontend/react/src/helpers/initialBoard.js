@@ -1,3 +1,4 @@
+// Random initial board state
 export const initialBoard = [
   [
     { color: "light", piece: null },
