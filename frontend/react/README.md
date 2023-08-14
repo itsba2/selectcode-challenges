@@ -1,8 +1,36 @@
-# React + Vite
+# React Challenge - Chess
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Author: @itsba2
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You need `docker` installed.
+
+## Build and Run Docker
+
+First clone the repository
+
+```
+git clone https://github.com/itsba2/selectcode-challenges.git
+```
+
+On your terminal, find the /frontend/react directory where you cloned the repository
+
+```
+cd /path/to/repository/frontend/react
+```
+
+Then, build and run docker
+
+```
+docker build -t react_chess .
+docker run --name react_chess_container -p 5173:5173 react_chess
+```
+
+Now, go to [http://localhost:5173/](http://localhost:5173/) on your browser and enjoy the game!
+
+## Credits
+- [White queen](https://en.wikipedia.org/wiki/File:Chess_qlt45.svg)
+- [Black queen](https://en.wikipedia.org/wiki/File:Chess_qdt45.svg)
+- [White knight](https://en.wikipedia.org/wiki/File:Chess_nlt45.svg)
+- [Black knight](https://en.wikipedia.org/wiki/File:Chess_ndt45.svg)
