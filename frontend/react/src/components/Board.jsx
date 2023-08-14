@@ -53,17 +53,17 @@ const Board = () => {
               <Square
                 key={`row${rowIndex}sqr${squareIndex}`}
                 piece={{ type: square.piece?.type, color: square.piece?.color }}
-                color={classNames(
-                  // normal square
-                  square && `${square?.color}-square`,
-                  // selected square
-                  selectedPiece[0] === rowIndex &&
-                    selectedPiece[1] === squareIndex &&
-                    "selected-square",
-                  // valid move square
-                  arrayInArray([rowIndex, squareIndex], validMoves) &&
-                    "valid-move-square"
-                )}
+                style={{
+                  type: classNames(
+                    // normal square
+                    square && `${square?.color}-square`,
+                    // selected square
+                    selectedPiece[0] === rowIndex &&
+                      selectedPiece[1] === squareIndex &&
+                      "selected-square"
+                  ),
+                  validMove: arrayInArray([rowIndex, squareIndex], validMoves),
+                }}
                 onClick={() => handleSquareClick(rowIndex, squareIndex)}
               />
             );
