@@ -7,28 +7,32 @@ import { classNames } from "../helpers/classNames";
 import { arrayInArray } from "../helpers/arrayInArray";
 
 const Board = () => {
-  let board = initialBoard;
+  // let board = initialBoard;
+  const [board, setBoard] = useState(initialBoard);
   const [currentPlayer, setCurrentPlayer] = useState("white");
   const [selectedPiece, setSelectedPiece] = useState([]);
   const [validMoves, setValidMoves] = useState([]);
 
   const handleSquareClick = (row, col) => {
-    // allow select only when user owns piece and there is no piece selected
-    if (board[row][col].piece?.color === currentPlayer) {
-      if (!selectedPiece.length) {
+    // allow square select when there is no other piece selected
+    if (!selectedPiece.length) {
+      // and when user owns that piece
+      if (board[row][col].piece?.color === currentPlayer) {
         setSelectedPiece([row, col]);
         // trigger valid moves
         handleValidMoves(row, col, board[row][col].piece?.type);
       }
-    }
-    // if a piece is already selected, deselect it by click on the same piecef
-    if (
-      selectedPiece.length &&
-      selectedPiece[0] === row &&
-      selectedPiece[1] === col
-    ) {
-      setSelectedPiece([]);
-      setValidMoves([]);
+    } else {
+      // if a piece is already selected
+      // deselect it by click on the same piece
+      if (selectedPiece[0] === row && selectedPiece[1] === col) {
+        setSelectedPiece([]);
+        setValidMoves([]);
+
+        // if user clicks on a valid square, move that piece to the clicked square
+      } else if (arrayInArray([row, col], validMoves)) {
+        handleMove(selectedPiece[0], selectedPiece[1], row, col);
+      }
     }
   };
 
@@ -43,9 +47,24 @@ const Board = () => {
     setValidMoves(valids);
   };
 
+  const handleMove = (fromRow, fromCol, toRow, toCol) => {
+    // create board copy
+    const tempBoard = [...board];
+    // assign selected piece to its new position
+    tempBoard[toRow][toCol].piece = tempBoard[fromRow][fromCol].piece;
+    // empty previous position
+    tempBoard[fromRow][fromCol].piece = null;
+    // set new board state
+    setBoard(tempBoard);
+    // empty selected piece and valid moves
+    setSelectedPiece([]);
+    setValidMoves([]);
+    setCurrentPlayer(currentPlayer === "white" ? "black" : "white");
+  };
+
   return (
     <>
-      <h1>Chess</h1>
+      <h3>{currentPlayer.toUpperCase()}'s turn</h3>
       <div className="board">
         {board.map((row, rowIndex) =>
           row.map((square, squareIndex) => {
@@ -70,6 +89,7 @@ const Board = () => {
           })
         )}
       </div>
+      <p>README.md file for credits.</p>
     </>
   );
 };
