@@ -8,7 +8,9 @@ body {
   --content-grid-gap: 15px;
 }
 
+/* ************ */
 /* Desktop View */
+/* ************ */
 
 #main-container {
   display: flex;
@@ -178,7 +180,9 @@ body {
   display: none;
 }
 
+/* *********** */
 /* Tablet View */
+/* *********** */
 
 @media (max-width: 1000px) {
   #content-grid {
@@ -190,7 +194,9 @@ body {
   }
 }
 
+/* *********** */
 /* Mobile View */
+/* *********** */
 
 @media (max-width: 550px) {
   #main-container {
