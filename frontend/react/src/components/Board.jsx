@@ -13,6 +13,7 @@ const Board = () => {
   const [selectedPiece, setSelectedPiece] = useState([]);
   const [validMoves, setValidMoves] = useState([]);
   const [piecesUnderThreat, setPiecesUnderThreat] = useState([]);
+  const [winner, setWinner] = useState(null);
 
   const handleSquareClick = (row, col) => {
     const currentPlayerOwnsPiece =
@@ -64,6 +65,11 @@ const Board = () => {
   };
 
   const handleMove = (fromRow, fromCol, toRow, toCol) => {
+    // end game if a queen gets eaten
+    if (board[toRow][toCol].piece?.type === "queen") {
+      // set the winner
+      setWinner(board[fromRow][fromCol].piece?.color);
+    }
     // create board copy
     const tempBoard = [...board];
     // assign selected piece to its new position
@@ -82,8 +88,12 @@ const Board = () => {
 
   return (
     <>
-      <h3>{currentPlayer.toUpperCase()}'s turn</h3>
-      <div className="board">
+      {winner ? (
+        <h3>Winner: {winner.toUpperCase()}</h3>
+      ) : (
+        <h3>{currentPlayer.toUpperCase()}'s turn</h3>
+      )}
+      <div className={`board ${winner && "end-game"}`}>
         {board.map((row, rowIndex) =>
           row.map((square, squareIndex) => {
             return (
@@ -105,12 +115,15 @@ const Board = () => {
                     arrayInArray([rowIndex, squareIndex], validMoves) &&
                     !arrayInArray([rowIndex, squareIndex], piecesUnderThreat),
                 }}
-                onClick={() => handleSquareClick(rowIndex, squareIndex)}
+                onClick={() => {
+                  if (!winner) handleSquareClick(rowIndex, squareIndex);
+                }}
               />
             );
           })
         )}
       </div>
+      {winner && <p>Refresh page to play again.</p>}
       <p>README.md file for credits.</p>
     </>
   );

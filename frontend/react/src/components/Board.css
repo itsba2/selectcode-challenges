@@ -9,6 +9,10 @@
   grid-template-rows: repeat(8, calc(var(--board-height) / 8));
 }
 
+.board.end-game {
+  opacity: 20%;
+}
+
 .square {
   width: 60px;
   height: 60px;
