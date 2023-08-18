@@ -5,9 +5,10 @@ import * as passport from 'passport';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.use(
     session({
-      secret: 'KEEP ME IN A .ENV FILE',
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -18,6 +19,7 @@ async function bootstrap() {
 
   app.use(passport.initialize());
   app.use(passport.session());
-  await app.listen(3000);
+
+  await app.listen(process.env.PORT);
 }
 bootstrap();

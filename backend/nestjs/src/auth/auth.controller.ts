@@ -1,15 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UseGuards,
-  Request,
-} from '@nestjs/common';
+import { Controller, Req, Body, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/users/dtos/user.dto';
-import { LocalAuthGuard } from './local-auth.guard';
-import { Request as ReqI } from 'express';
+import { LoginGuard } from './login.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -22,15 +14,15 @@ export class AuthController {
   }
 
   // POST /auth : Login user
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LoginGuard)
   @Post()
-  loginUser(@Request() req: ReqI): any {
-    return req.user;
+  loginUser(@Body() body: UserDto): any {
+    return body;
   }
 
   // GET /auth/logout : Logout user
   @Get('logout')
-  logoutUser(@Request() req): any {
+  logoutUser(@Req() req): any {
     req.session.destroy();
     return { msg: 'logged out' };
   }

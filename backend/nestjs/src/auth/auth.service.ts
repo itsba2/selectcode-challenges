@@ -2,7 +2,6 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { UserDto } from 'src/users/dtos/user.dto';
@@ -19,14 +18,16 @@ export class AuthService {
     return payload;
   }
 
-  async validateUser(payload: UserDto) {
-    const user = await this.usersService.getUserByUsername(payload.username);
+  async validateUser(username: string, password: string) {
+    // Check if user exists
+    const user = await this.usersService.getUserByUsername(username);
     if (!user) throw new NotFoundException('User not found.');
-    const match = await bcrypt.compare(payload.password, user.password);
-    if (!user || !match) throw new UnauthorizedException();
-    if (user && match) {
-      const { password, ...rest } = user;
-      return rest;
+
+    // Check if passwords match
+    const match = await bcrypt.compare(password, user.password);
+    if (match) {
+      const { password, ...result } = user;
+      return result;
     }
     return null;
   }

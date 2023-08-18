@@ -1,15 +1,12 @@
 import {
   Controller,
+  Req,
+  Body,
+  Param,
   Get,
   Post,
-  Body,
   Put,
-  Param,
   Delete,
-  HttpException,
-  HttpStatus,
-  UseGuards,
-  Request,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -17,7 +14,6 @@ import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
 import { AddTaskDto } from './dtos/add-task.dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
-import { AuthenticatedGuard } from 'src/auth/authenticated.guard';
 import { ProjectsService } from 'src/projects/projects.service';
 
 @Controller('projects/:projectId/tasks')
@@ -28,10 +24,9 @@ export class TasksController {
   ) {}
 
   // GET /projects/:projectId/tasks : Retrieve a list of tasks in a project.
-  @UseGuards(AuthenticatedGuard)
   @Get()
   async getTasks(
-    @Request() req,
+    @Req() req,
     @Param('projectId') projectId: string,
   ): Promise<Task[]> {
     // get corresponding project
@@ -45,10 +40,9 @@ export class TasksController {
   }
 
   // POST /projects/:projectId/tasks : Add a new task to a project.
-  @UseGuards(AuthenticatedGuard)
   @Post()
   async addTask(
-    @Request() req,
+    @Req() req,
     @Param('projectId') projectId: string,
     @Body() body: AddTaskDto,
   ): Promise<AddTaskDto> {
@@ -63,10 +57,9 @@ export class TasksController {
   }
 
   // PUT /projects/:projectId/tasks/:taskId : Update the details of a task in a project.
-  @UseGuards(AuthenticatedGuard)
   @Put(':taskId')
   async update(
-    @Request() req,
+    @Req() req,
     @Param('projectId') projectId: string,
     @Param('taskId') taskId: string,
     @Body() body: UpdateTaskDto,
@@ -85,16 +78,15 @@ export class TasksController {
     const task = await this.tasksService.getTaskById(taskId);
 
     // if task does not exist throw exception
-    if (!task) throw new HttpException('Task not found.', HttpStatus.NOT_FOUND);
+    if (!task) throw new NotFoundException('Task not found.');
 
     return this.tasksService.updateTask(taskId, body);
   }
 
   // DELETE /projects/:projectId/tasks/:taskId : Remove a task from a project.
-  @UseGuards(AuthenticatedGuard)
   @Delete(':taskId')
   async remove(
-    @Request() req,
+    @Req() req,
     @Param('projectId') projectId: string,
     @Param('taskId') taskId: string,
   ): Promise<string> {
@@ -112,7 +104,7 @@ export class TasksController {
     const task = await this.tasksService.getTaskById(taskId);
 
     // if task does not exist throw exception
-    if (!task) throw new HttpException('Task not found.', HttpStatus.NOT_FOUND);
+    if (!task) throw new NotFoundException('Task not found.');
 
     return this.tasksService.removeTask(taskId);
   }
