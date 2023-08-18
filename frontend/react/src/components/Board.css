@@ -18,11 +18,11 @@
 }
 
 .dark-square {
-  background-color: darkseagreen;
+  background-color: lightseagreen;
 }
 
 .light-square {
-  background-color: lightseagreen;
+  background-color: darkseagreen;
 }
 
 .selected-square {
@@ -33,5 +33,9 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: lightskyblue;
+  background-color: darkslateblue;
+}
+
+.under-threat-square {
+  background-color: lightsalmon;
 }

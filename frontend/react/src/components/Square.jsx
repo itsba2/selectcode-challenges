@@ -1,5 +1,6 @@
 import React from "react";
 import Piece from "./Piece";
+import { classNames } from "../helpers/classNames";
 
 const Square = ({ piece, style, onClick }) => {
   /**
@@ -10,7 +11,11 @@ const Square = ({ piece, style, onClick }) => {
    */
   return (
     <div className={`square ${style.type}`} onClick={onClick}>
-      <div className={style.validMove ? "valid-move-square" : ""}></div>
+      <div
+        className={classNames(
+          style.validMove && "valid-move-square",
+        )}
+      ></div>
       {piece && <Piece type={piece.type} color={piece.color} />}
     </div>
   );

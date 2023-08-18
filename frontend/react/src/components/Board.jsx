@@ -12,15 +12,19 @@ const Board = () => {
   const [currentPlayer, setCurrentPlayer] = useState("white");
   const [selectedPiece, setSelectedPiece] = useState([]);
   const [validMoves, setValidMoves] = useState([]);
+  const [piecesUnderThreat, setPiecesUnderThreat] = useState([]);
 
   const handleSquareClick = (row, col) => {
+    const currentPlayerOwnsPiece =
+      board[row][col].piece?.color === currentPlayer;
     // allow square select when there is no other piece selected
     if (!selectedPiece.length) {
       // and when user owns that piece
-      if (board[row][col].piece?.color === currentPlayer) {
+      if (currentPlayerOwnsPiece) {
         setSelectedPiece([row, col]);
         // trigger valid moves
-        handleValidMoves(row, col, board[row][col].piece?.type);
+        const validMoves = handleValidMoves(row, col);
+        handlePiecesUnderThreat(validMoves);
       }
     } else {
       // if a piece is already selected
@@ -36,15 +40,27 @@ const Board = () => {
     }
   };
 
-  const handleValidMoves = (row, col, piece) => {
-    const moveValidity = new MoveValidity(board);
+  const handleValidMoves = (row, col) => {
+    const pieceType = board[row][col].piece?.type;
+    const moveValidity = new MoveValidity(board, currentPlayer);
     let valids = [];
-    if (piece === "knight") {
+    if (pieceType === "knight") {
       valids = moveValidity.validKnightMoves(row, col);
-    } else if (piece === "queen") {
+    } else if (pieceType === "queen") {
       valids = moveValidity.validQueenMoves(row, col);
     }
     setValidMoves(valids);
+    return valids;
+  };
+
+  const handlePiecesUnderThreat = (validMoves) => {
+    const opponentColor = currentPlayer === "black" ? "white" : "black";
+    const underThreats = validMoves.filter((validMove) => {
+      if (board[validMove[0]][validMove[1]].piece?.color === opponentColor) {
+        return [validMove[0], validMove[1]];
+      }
+    });
+    setPiecesUnderThreat(underThreats);
   };
 
   const handleMove = (fromRow, fromCol, toRow, toCol) => {
@@ -59,6 +75,8 @@ const Board = () => {
     // empty selected piece and valid moves
     setSelectedPiece([]);
     setValidMoves([]);
+    setPiecesUnderThreat([]);
+    // change turn
     setCurrentPlayer(currentPlayer === "white" ? "black" : "white");
   };
 
@@ -79,9 +97,13 @@ const Board = () => {
                     // selected square
                     selectedPiece[0] === rowIndex &&
                       selectedPiece[1] === squareIndex &&
-                      "selected-square"
+                      "selected-square",
+                    arrayInArray([rowIndex, squareIndex], piecesUnderThreat) &&
+                      "under-threat-square"
                   ),
-                  validMove: arrayInArray([rowIndex, squareIndex], validMoves),
+                  validMove:
+                    arrayInArray([rowIndex, squareIndex], validMoves) &&
+                    !arrayInArray([rowIndex, squareIndex], piecesUnderThreat),
                 }}
                 onClick={() => handleSquareClick(rowIndex, squareIndex)}
               />
