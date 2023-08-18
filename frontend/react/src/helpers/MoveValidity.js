@@ -1,7 +1,7 @@
 class MoveValidity {
   /**
    * Calculate move validity
-   * @param {array} board Board state
+   * @param {Array} board Board state
    * @param {string} currentPlayer Current player's color
    */
   constructor(board, currentPlayer) {
