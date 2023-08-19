@@ -9,6 +9,14 @@
   grid-template-rows: repeat(8, calc(var(--board-height) / 8));
 }
 
+.board.end-game {
+  opacity: 20%;
+}
+
+.board.flipped {
+  transform: rotate(180deg);
+}
+
 .square {
   width: 60px;
   height: 60px;
@@ -18,11 +26,11 @@
 }
 
 .dark-square {
-  background-color: darkseagreen;
+  background-color: lightseagreen;
 }
 
 .light-square {
-  background-color: lightseagreen;
+  background-color: darkseagreen;
 }
 
 .selected-square {
@@ -33,5 +41,22 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background-color: lightskyblue;
+  background-color: darkslateblue;
+}
+
+.under-threat-square {
+  background-color: lightsalmon;
+}
+
+#flip-board-button {
+  background-color: salmon;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#flip-board-button:hover {
+  background-color: darksalmon;
 }

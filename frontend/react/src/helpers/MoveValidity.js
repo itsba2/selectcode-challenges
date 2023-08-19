@@ -1,10 +1,12 @@
 class MoveValidity {
   /**
    * Calculate move validity
-   * @param {array} board Board state
+   * @param {Array} board Board state
+   * @param {string} currentPlayer Current player's color
    */
-  constructor(board) {
+  constructor(board, currentPlayer) {
     this.board = board;
+    this.currentPlayer = currentPlayer;
   }
 
   // calculate valid knight moves
@@ -73,12 +75,13 @@ class MoveValidity {
   isValidSquare(row, col) {
     // piece can move to square if
     return (
+      // square is inside board boundaries
       row >= 0 &&
       row < this.board.length &&
       col >= 0 &&
       col < this.board[0].length &&
-      // the square is empty
-      !this.board[row][col].piece
+      // square is not occupied by curren player's own piece
+      this.board[row][col].piece?.color !== this.currentPlayer
     );
   }
 }
