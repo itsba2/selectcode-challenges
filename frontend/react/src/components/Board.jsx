@@ -14,6 +14,7 @@ const Board = () => {
   const [validMoves, setValidMoves] = useState([]);
   const [piecesUnderThreat, setPiecesUnderThreat] = useState([]);
   const [winner, setWinner] = useState(null);
+  const [boardFlipped, setBoardFlipped] = useState(false);
 
   const handleSquareClick = (row, col) => {
     /**
@@ -147,6 +148,14 @@ const Board = () => {
     setCurrentPlayer(currentPlayer === "white" ? "black" : "white");
   };
 
+  const handleFlipBoard = () => {
+    /**
+     * Handles flip board
+     */
+    setBoardFlipped((prev) => !prev);
+    setBoard((prev) => prev.reverse());
+  };
+
   return (
     <>
       {winner ? (
@@ -154,13 +163,18 @@ const Board = () => {
       ) : (
         <h3>{currentPlayer.toUpperCase()}'s turn</h3>
       )}
-      <div className={`board ${winner && "end-game"}`}>
+      <div
+        className={`board ${winner && "end-game"} ${boardFlipped && "flipped"}`}
+      >
         {board.map((row, rowIndex) =>
           row.map((square, squareIndex) => {
             return (
               <Square
                 key={`row${rowIndex}sqr${squareIndex}`}
-                piece={{ type: square.piece?.type, color: square.piece?.color }}
+                piece={{
+                  type: square.piece?.type,
+                  color: square.piece?.color,
+                }}
                 style={{
                   squareClass: classNames(
                     // normal square
@@ -187,6 +201,14 @@ const Board = () => {
           })
         )}
       </div>
+
+      {!winner && (
+        <div>
+          <button id="flip-board-button" onClick={handleFlipBoard}>
+            Flip Board
+          </button>
+        </div>
+      )}
       {winner && <p>Refresh page to play again.</p>}
       <p>README.md file for credits.</p>
     </>

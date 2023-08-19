@@ -13,6 +13,10 @@
   opacity: 20%;
 }
 
+.board.flipped {
+  transform: rotate(180deg);
+}
+
 .square {
   width: 60px;
   height: 60px;
@@ -42,4 +46,17 @@
 
 .under-threat-square {
   background-color: lightsalmon;
+}
+
+#flip-board-button {
+  background-color: salmon;
+  margin-top: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#flip-board-button:hover {
+  background-color: darksalmon;
 }
