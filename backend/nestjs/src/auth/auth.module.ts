@@ -10,5 +10,6 @@ import { PassportModule } from '@nestjs/passport';
   imports: [UsersModule, PassportModule.register({ session: true })],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, SessionSerializer],
+  exports: [AuthService, LocalStrategy, SessionSerializer],
 })
 export class AuthModule {}

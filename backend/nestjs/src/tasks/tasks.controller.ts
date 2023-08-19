@@ -9,13 +9,16 @@ import {
   Delete,
   NotFoundException,
   UnauthorizedException,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
 import { AddTaskDto } from './dtos/add-task.dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
 import { ProjectsService } from 'src/projects/projects.service';
+import { RouteGuard } from 'src/auth/route.guard';
 
+@UseGuards(RouteGuard)
 @Controller('projects/:projectId/tasks')
 export class TasksController {
   constructor(
@@ -31,6 +34,9 @@ export class TasksController {
   ): Promise<Task[]> {
     // get corresponding project
     const project = await this.projectsService.getProjectById(projectId);
+
+    // if project does not exist throw exception
+    if (!project) throw new NotFoundException('Project not found.');
 
     // if user does not own this project, don't allow task add
     if (req.user.id !== parseInt(project.userId))
@@ -48,6 +54,9 @@ export class TasksController {
   ): Promise<AddTaskDto> {
     // get corresponding project
     const project = await this.projectsService.getProjectById(projectId);
+
+    // if project does not exist throw exception
+    if (!project) throw new NotFoundException('Project not found.');
 
     // if user does not own this project, don't allow task add
     if (req.user.id !== parseInt(project.userId))
@@ -67,12 +76,12 @@ export class TasksController {
     // get corresponding project
     const project = await this.projectsService.getProjectById(projectId);
 
-    // if project does not exist throw exception
-    if (!project) throw new NotFoundException('Project not found.');
-
     // if user does not own this project, don't allow task update
     if (req.user.id !== parseInt(project.userId))
       throw new UnauthorizedException();
+
+    // if project does not exist throw exception
+    if (!project) throw new NotFoundException('Project not found.');
 
     // get existing task
     const task = await this.tasksService.getTaskById(taskId);
@@ -96,7 +105,7 @@ export class TasksController {
     // if project does not exist throw exception
     if (!project) throw new NotFoundException('Project not found.');
 
-    // if user does not own this project, don't allow task update
+    // if user does not own this project, don't allow task delete
     if (req.user.id !== parseInt(project.userId))
       throw new UnauthorizedException();
 
