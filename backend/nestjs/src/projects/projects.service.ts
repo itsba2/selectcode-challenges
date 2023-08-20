@@ -21,8 +21,7 @@ export class ProjectsService {
 
   // Add a new project.
   addProject(payload: AddProjectDto): AddProjectDto {
-    this.projectPublisherService.publishProjectAddedEvent(payload);
-    return payload;
+    return this.projectPublisherService.publishProjectAddedEvent(payload);
   }
 
   // Retrieve the project given its ID.
@@ -35,13 +34,14 @@ export class ProjectsService {
     projectId: string,
     payload: UpdateProjectDto,
   ): UpdateProjectDto {
-    this.projectPublisherService.publishProjectUpdatedEvent(projectId, payload);
-    return payload;
+    return this.projectPublisherService.publishProjectUpdatedEvent(
+      projectId,
+      payload,
+    );
   }
 
   // Remove a project.
   removeProject(projectId: string): string {
-    this.projectPublisherService.publishProjectRemovedEvent(projectId);
-    return projectId;
+    return this.projectPublisherService.publishProjectRemovedEvent(projectId);
   }
 }

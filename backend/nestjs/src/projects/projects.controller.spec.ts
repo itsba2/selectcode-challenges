@@ -76,7 +76,7 @@ describe('ProjectsController', () => {
   });
 
   describe('addProject', () => {
-    it('should add a new project', async () => {
+    it('should add a new project and return the new project details', async () => {
       jest.spyOn(service, 'addProject').mockReturnValue(mockAddProjectBody);
 
       const result = controller.addProject(mockReqUserId, mockAddProjectBody);
@@ -86,7 +86,7 @@ describe('ProjectsController', () => {
   });
 
   describe('updateProject', () => {
-    it('should update an existing project', async () => {
+    it('should update an existing project and return the updated project details', async () => {
       jest
         .spyOn(service, 'getProjectById')
         .mockResolvedValue(mockExistingProject);
@@ -131,7 +131,7 @@ describe('ProjectsController', () => {
   });
 
   describe('removeProject', () => {
-    it('should remove an existing project', async () => {
+    it('should remove an existing project and return the ID of removed project', async () => {
       jest
         .spyOn(service, 'getProjectById')
         .mockResolvedValue(mockExistingProject);
