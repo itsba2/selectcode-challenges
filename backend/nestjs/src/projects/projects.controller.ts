@@ -43,8 +43,10 @@ export class ProjectsController {
   ): Promise<UpdateProjectDto> {
     // get existing project
     const project = await this.projectsService.getProjectById(projectId);
+
     // if project does not exist throw exception
     if (!project) throw new NotFoundException('Project not found.');
+
     // if user does not own this project, don't allow update
     if (req.user.id !== parseInt(project.userId))
       throw new UnauthorizedException();
@@ -60,8 +62,10 @@ export class ProjectsController {
   ): Promise<string> {
     // get existing project
     const project = await this.projectsService.getProjectById(projectId);
+
     // if project does not exist throw exception
     if (!project) throw new NotFoundException('Project not found.');
+
     // if user does not own this project, don't allow remove
     if (req.user.id !== parseInt(project.userId))
       throw new UnauthorizedException();

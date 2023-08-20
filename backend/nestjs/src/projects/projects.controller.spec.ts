@@ -8,24 +8,23 @@ describe('ProjectsController', () => {
   let service: ProjectsService;
 
   // Common test data
-  const mockReqUserId = { user: { id: 1 } };
-  const userId = '1';
+  const reqUserId = { user: { id: 1 } };
   const projectId = '1';
-  const falseUserId = '5';
+  const falseUserId = 5;
   const falseProjectId = '5';
 
   // Mock data
   const mockProjects = [
     {
       id: '1',
-      userId,
+      userId: '1',
       title: 'Project 1',
       description: 'Project1 Description',
       createdDate: '1692474530713',
     },
   ];
   const mockAddProjectBody = {
-    userId,
+    userId: '1',
     title: 'New Project',
     description: "New Project's description",
   };
@@ -40,6 +39,8 @@ describe('ProjectsController', () => {
     description: 'Existing Project description',
     createdDate: '1692474530713',
   };
+
+  // Create testing module
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -66,24 +67,30 @@ describe('ProjectsController', () => {
     expect(controller).toBeDefined();
   });
 
+  // getProjects
+
   describe('getProjects', () => {
     it('should return an array of projects', async () => {
       jest.spyOn(service, 'getProjects').mockResolvedValue(mockProjects);
 
-      const result = await controller.getProjects(mockReqUserId);
+      const result = await controller.getProjects(reqUserId);
       expect(result).toEqual(mockProjects);
     });
   });
+
+  // addProject
 
   describe('addProject', () => {
     it('should add a new project and return the new project details', async () => {
       jest.spyOn(service, 'addProject').mockReturnValue(mockAddProjectBody);
 
-      const result = controller.addProject(mockReqUserId, mockAddProjectBody);
+      const result = controller.addProject(reqUserId, mockAddProjectBody);
 
       expect(result).toEqual(mockAddProjectBody);
     });
   });
+
+  // updateProject
 
   describe('updateProject', () => {
     it('should update an existing project and return the updated project details', async () => {
@@ -95,7 +102,7 @@ describe('ProjectsController', () => {
         .mockReturnValue(mockUpdateProjectBody);
 
       const result = await controller.updateProject(
-        mockReqUserId,
+        reqUserId,
         projectId,
         mockUpdateProjectBody,
       );
@@ -108,7 +115,7 @@ describe('ProjectsController', () => {
 
       await expect(
         controller.updateProject(
-          mockReqUserId,
+          reqUserId,
           falseProjectId,
           mockUpdateProjectBody,
         ),
@@ -130,6 +137,8 @@ describe('ProjectsController', () => {
     });
   });
 
+  // removeProject
+
   describe('removeProject', () => {
     it('should remove an existing project and return the ID of removed project', async () => {
       jest
@@ -137,7 +146,7 @@ describe('ProjectsController', () => {
         .mockResolvedValue(mockExistingProject);
       jest.spyOn(service, 'removeProject').mockReturnValue(projectId);
 
-      const result = await controller.removeProject(mockReqUserId, projectId);
+      const result = await controller.removeProject(reqUserId, projectId);
 
       expect(result).toBe(projectId);
     });
@@ -146,7 +155,7 @@ describe('ProjectsController', () => {
       jest.spyOn(service, 'getProjectById').mockResolvedValue(undefined);
 
       await expect(
-        controller.removeProject(mockReqUserId, falseProjectId),
+        controller.removeProject(reqUserId, falseProjectId),
       ).rejects.toThrowError(NotFoundException);
     });
 
