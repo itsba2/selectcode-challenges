@@ -38,7 +38,7 @@ SESSION_SECRET=youShallNotPass
 Then, run the docker container
 
 ```
-docker compose up -d
+docker compose up
 ```
 
 ## Usage

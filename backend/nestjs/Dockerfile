@@ -17,7 +17,8 @@ COPY . .
 RUN npm run build
 
 # Expose port
-EXPOSE 3000
+ARG PORT
+EXPOSE ${PORT}
 
 # Run
 CMD ["node", "dist/main"]
