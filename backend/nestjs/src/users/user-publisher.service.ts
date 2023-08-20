@@ -12,5 +12,6 @@ export class UserPublisherService {
     userAddedEvent.username = payload.username;
     userAddedEvent.password = payload.password;
     this.eventEmitter.emit('user.added', userAddedEvent);
+    return payload.username;
   }
 }

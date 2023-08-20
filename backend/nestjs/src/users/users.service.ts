@@ -15,8 +15,7 @@ export class UsersService {
 
   // Add a new user.
   addUser(payload: UserDto): string {
-    this.userPublisherService.publishUserAddedEvent(payload);
-    return payload.username;
+    return this.userPublisherService.publishUserAddedEvent(payload);
   }
 
   // Retrieve the user given its username.
