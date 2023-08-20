@@ -15,8 +15,8 @@ import { TasksService } from './tasks.service';
 import { Task } from './entities/task.entity';
 import { AddTaskDto } from './dtos/add-task.dto';
 import { UpdateTaskDto } from './dtos/update-task.dto';
-import { ProjectsService } from 'src/projects/projects.service';
-import { RouteGuard } from 'src/auth/route.guard';
+import { ProjectsService } from '../projects/projects.service';
+import { RouteGuard } from '../auth/route.guard';
 
 @UseGuards(RouteGuard)
 @Controller('projects/:projectId/tasks')
@@ -67,7 +67,7 @@ export class TasksController {
 
   // PUT /projects/:projectId/tasks/:taskId : Update the details of a task in a project.
   @Put(':taskId')
-  async update(
+  async updateTask(
     @Req() req,
     @Param('projectId') projectId: string,
     @Param('taskId') taskId: string,
@@ -75,10 +75,6 @@ export class TasksController {
   ): Promise<UpdateTaskDto> {
     // get corresponding project
     const project = await this.projectsService.getProjectById(projectId);
-
-    // if user does not own this project, don't allow task update
-    if (req.user.id !== parseInt(project.userId))
-      throw new UnauthorizedException();
 
     // if project does not exist throw exception
     if (!project) throw new NotFoundException('Project not found.');
@@ -89,12 +85,16 @@ export class TasksController {
     // if task does not exist throw exception
     if (!task) throw new NotFoundException('Task not found.');
 
+    // if user does not own this project, don't allow task update
+    if (req.user.id !== parseInt(project.userId))
+      throw new UnauthorizedException();
+
     return this.tasksService.updateTask(taskId, body);
   }
 
   // DELETE /projects/:projectId/tasks/:taskId : Remove a task from a project.
   @Delete(':taskId')
-  async remove(
+  async removeTask(
     @Req() req,
     @Param('projectId') projectId: string,
     @Param('taskId') taskId: string,
@@ -105,15 +105,15 @@ export class TasksController {
     // if project does not exist throw exception
     if (!project) throw new NotFoundException('Project not found.');
 
-    // if user does not own this project, don't allow task delete
-    if (req.user.id !== parseInt(project.userId))
-      throw new UnauthorizedException();
-
     // get existing task
     const task = await this.tasksService.getTaskById(taskId);
 
     // if task does not exist throw exception
     if (!task) throw new NotFoundException('Task not found.');
+
+    // if user does not own this project, don't allow task delete
+    if (req.user.id !== parseInt(project.userId))
+      throw new UnauthorizedException();
 
     return this.tasksService.removeTask(taskId);
   }
