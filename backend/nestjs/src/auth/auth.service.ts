@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
-import { UserDto } from 'src/users/dtos/user.dto';
+import { UsersService } from '../users/users.service';
+import { UserDto } from '../users/dtos/user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
