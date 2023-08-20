@@ -15,7 +15,7 @@ import { ProjectsService } from './projects.service';
 import { Project } from './entities/project.entity';
 import { UpdateProjectDto } from './dtos/update-project.dto';
 import { AddProjectDto } from './dtos/add-project.dto';
-import { RouteGuard } from 'src/auth/route.guard';
+import { RouteGuard } from '../auth/route.guard';
 
 @UseGuards(RouteGuard)
 @Controller('projects')
