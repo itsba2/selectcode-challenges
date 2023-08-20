@@ -21,11 +21,10 @@ export class TasksService {
 
   // Add a new task to a project.
   addTask(projectId: string, payload: AddTaskDto): AddTaskDto {
-    this.taskPublisherService.publishTaskAddedEvent({
+    return this.taskPublisherService.publishTaskAddedEvent({
       projectId,
       ...payload,
     });
-    return payload;
   }
 
   // Retrieve the task given its ID.
@@ -35,13 +34,11 @@ export class TasksService {
 
   // Update the details of a task in a project.
   updateTask(taskId: string, payload: UpdateTaskDto): UpdateTaskDto {
-    this.taskPublisherService.publishTaskUpdatedEvent(taskId, payload);
-    return payload;
+    return this.taskPublisherService.publishTaskUpdatedEvent(taskId, payload);
   }
 
   // Remove a task from a project.
   removeTask(taskId: string): string {
-    this.taskPublisherService.publishTaskRemovedEvent(taskId);
-    return taskId;
+    return this.taskPublisherService.publishTaskRemovedEvent(taskId);
   }
 }

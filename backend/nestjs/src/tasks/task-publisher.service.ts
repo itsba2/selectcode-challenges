@@ -10,25 +10,31 @@ import { UpdateTaskDto } from './dtos/update-task.dto';
 export class TaskPublisherService {
   constructor(private eventEmitter: EventEmitter2) {}
 
-  publishTaskAddedEvent(payload: AddTaskDto): void {
+  publishTaskAddedEvent(payload: AddTaskDto): AddTaskDto {
     const taskAddedEvent = new TaskAddedEvent();
     taskAddedEvent.projectId = payload.projectId;
     taskAddedEvent.title = payload.title;
     taskAddedEvent.description = payload.description;
     this.eventEmitter.emit('task.added', taskAddedEvent);
+    return payload;
   }
 
-  publishTaskUpdatedEvent(taskId: string, payload: UpdateTaskDto): void {
+  publishTaskUpdatedEvent(
+    taskId: string,
+    payload: UpdateTaskDto,
+  ): UpdateTaskDto {
     const taskUpdatedEvent = new TaskUpdatedEvent();
     taskUpdatedEvent.id = taskId;
     taskUpdatedEvent.title = payload.title;
     taskUpdatedEvent.description = payload.description;
     this.eventEmitter.emit('task.updated', taskUpdatedEvent);
+    return payload;
   }
 
-  publishTaskRemovedEvent(taskId: string): void {
+  publishTaskRemovedEvent(taskId: string): string {
     const taskRemovedEvent = new TaskRemovedEvent();
     taskRemovedEvent.id = taskId;
     this.eventEmitter.emit('task.removed', taskRemovedEvent);
+    return taskId;
   }
 }

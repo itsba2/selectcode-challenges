@@ -12,24 +12,21 @@ describe('ProjectsService', () => {
   let projectPublisherService: ProjectPublisherService;
 
   // Common test data
-  const mockReqUserId = { user: { id: 1 } };
   const userId = '1';
   const projectId = '1';
-  const falseUserId = '5';
-  const falseProjectId = '5';
 
   // Mock data
   const mockProjects = [
     {
       id: '1',
-      userId,
+      userId: '1',
       title: 'Project 1',
       description: 'Project1 Description',
       createdDate: '1692474530713',
     },
   ];
   const mockAddProjectBody = {
-    userId,
+    userId: '1',
     title: 'New Project',
     description: "New Project's description",
   };
@@ -37,13 +34,8 @@ describe('ProjectsService', () => {
     title: 'Updated Project',
     description: 'Updated Project description',
   };
-  const mockExistingProject = {
-    id: '1',
-    userId: '1',
-    title: 'Existing Project',
-    description: 'Existing Project description',
-    createdDate: '1692474530713',
-  };
+
+  // Create testing module
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -71,6 +63,8 @@ describe('ProjectsService', () => {
     expect(service).toBeDefined();
   });
 
+  // getProjects
+
   describe('getProjects', () => {
     it('should return an array of projects', async () => {
       jest.spyOn(projectsRepository, 'find').mockResolvedValue(mockProjects);
@@ -80,6 +74,8 @@ describe('ProjectsService', () => {
       expect(result).toEqual(mockProjects);
     });
   });
+
+  // addProject
 
   describe('addProject', () => {
     it('should add a new project and return the new project details', () => {
@@ -93,6 +89,8 @@ describe('ProjectsService', () => {
     });
   });
 
+  // updateProject
+
   describe('updateProject', () => {
     it('should update an existing project and return the updated project details', () => {
       jest
@@ -104,6 +102,8 @@ describe('ProjectsService', () => {
       expect(result).toEqual(mockUpdateProjectBody);
     });
   });
+
+  // removeProject
 
   describe('removeProject', () => {
     it('should remove an existing project and return the ID of removed project', () => {
