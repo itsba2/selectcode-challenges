@@ -12,12 +12,8 @@ describe('ProjectsService', () => {
   let taskPublisherService: TaskPublisherService;
 
   // Common test data
-  const reqUserId = { user: { id: 1 } };
   const projectId = '1';
   const taskId = '1';
-  const falseUserId = 5;
-  const falseProjectId = '5';
-  const falseTaskId = '5';
 
   // Mock data
   const mockTasks = [
@@ -44,20 +40,6 @@ describe('ProjectsService', () => {
   const mockUpdateTaskBody = {
     title: 'Updated Task of Project 1',
     description: 'Updated Task of Project Description',
-  };
-  const mockExistingTask = {
-    id: '1',
-    projectId: '1',
-    title: 'Existing Task of Project 1',
-    description: 'Existing Task of Project 1 Description',
-    createdDate: '1692474530713',
-  };
-  const mockExistingProject = {
-    id: '1',
-    userId: '1',
-    title: 'Existing Project',
-    description: 'Existing Project description',
-    createdDate: '1692474530713',
   };
 
   // Create testing module
